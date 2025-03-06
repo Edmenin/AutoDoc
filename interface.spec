@@ -5,7 +5,7 @@ a = Analysis(
     ['interface.py'],
     pathex=[],
     binaries=[],
-    datas=[('contratos_templates', 'contratos_templates')],
+    datas=[],
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
