@@ -8,7 +8,7 @@ from preenchimento import preencher_contrato
 
 def validar_apenas_letras(texto):
     """Valida se o texto contém apenas letras, números, espaços, acentos e alguns caracteres especiais."""
-    return re.match(r"^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ0-9\s\-.,'´`~]+$", texto) is not None
+    return re.match(r"^[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ0-9\s\-.,'´`~()]+$", texto) is not None
 
 def validar_apenas_numeros(texto):
     """Valida se o texto contém apenas números."""
@@ -17,10 +17,6 @@ def validar_apenas_numeros(texto):
 def validar_letras_numeros(texto):
     """Valida se o texto contém letras, números, espaços, acentos e caracteres especiais comuns em endereços."""
     return re.match(r"^[A-Za-z0-9\s.,\-/áàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ'´`~]+$", texto) is not None
-
-def validar_data(texto):
-    """Valida se o texto está no formato de data (DD/MM/AAAA)."""
-    return re.match(r"^\d{2}/\d{2}/\d{4}$", texto) is not None
 
 def validar_cnpj(texto):
     """Valida se o texto está no formato de CNPJ (XX.XXX.XXX/XXXX-XX)."""
@@ -75,14 +71,14 @@ def preencher_contrato_interface():
     if not validar_cnpj(dados_empresa["{{cnpj}}"]):
         messagebox.showerror("Erro", "CNPJ deve estar no formato XX.XXX.XXX/XXXX-XX.")
         return
-    if not validar_data(dados_empresa["{{inicio-campanha}}"]):
-        messagebox.showerror("Erro", "Data de início da campanha deve estar no formato DD/MM/AAAA.")
+    if not validar_letras_numeros(dados_empresa["{{inicio-campanha}}"]):
+        messagebox.showerror("Erro", "Data de início da campanha deve estar no formato -mês- de -ano-.")
         return
-    if not validar_data(dados_empresa["{{fim-campanha}}"]):
-        messagebox.showerror("Erro", "Data de fim da campanha deve estar no formato DD/MM/AAAA.")
+    if not validar_letras_numeros(dados_empresa["{{fim-campanha}}"]):
+        messagebox.showerror("Erro", "Data de fim da campanha deve estar no formato -mês- de -ano-.")
         return
-    if not validar_data(dados_empresa["{{data-atual}}"]):
-        messagebox.showerror("Erro", "Data atual deve estar no formato DD/MM/AAAA.")
+    if not validar_letras_numeros(dados_empresa["{{data-atual}}"]):
+        messagebox.showerror("Erro", "Data atual deve estar no formato -dia- de -mês- de -ano-.")
         return
     if not validar_apenas_letras(dados_empresa["{{nome}}"]):
         messagebox.showerror("Erro", "Nome do responsável deve conter apenas letras e caracteres especiais permitidos.")
